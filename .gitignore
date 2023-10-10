@@ -1,1 +1,2 @@
-.env
+server/.venv
+server/envs
