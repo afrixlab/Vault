@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1ec6b1 #283c35;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #283c35;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #1ec6b1;
+  border-radius: 20px;
+  border: 3px solid #283c35;
+}
+
+@layer components {
+  .form-or::before {
+    content: '';
+    height: 1px;
+    flex: 1 0 240px;
+    background-color: #293534;
+  }
+
+  .form-or::after {
+    content: '';
+    height: 1px;
+    flex: 1 0 240px;
+    background-color: #293534;
+  }
+
+  .sidebar {
+    @apply py-4 flex items-center  gap-3  transition duration-150  hover:bg-black hover:text-white hover:font-semibold;
+  }
+
+  .progress-bar {
+    height: 6px;
+    border-radius: 1000px;
+  }
+  .progress-bar::-webkit-progress-bar {
+    background-color: #000;
+    border-radius: 1000px;
+  }
+  .progress-bar::-webkit-progress-value {
+    background-color: #fff;
+    border-radius: 1000px;
+  }
+}
