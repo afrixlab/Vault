@@ -26,6 +26,7 @@ import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import SocialBtn from '@/components/SocialBtn';
 import Logo from '@/components/header/Logo';
+import axios from 'axios';
 
 const AllForm = () => {
   const router = useRouter();
@@ -45,8 +46,7 @@ const AllForm = () => {
       { scroll: false }
     );
 
-    window.location.search
-
+    window.location.search;
   }, [router, formState, forgetPassword]);
 
   const handleTogglePassword = () => setShow(!show);
@@ -95,7 +95,25 @@ const AllForm = () => {
               firstname: '',
               lastname: '',
             }}
-            onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+            onSubmit={async (values) => {
+              // POST TO http://vaults.protechhire.com/api/v1/auth/register/
+              await axios
+                .post('http://vaults.protechhire.com/api/v1/auth/register/', {
+                  values,
+                })
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+                .finally(() => {
+                  values.email = '';
+                  values.password = '';
+                  values.firstname = '';
+                  values.lastname = '';
+                });
+            }}
           >
             {({ handleSubmit, errors, touched }) => (
               <Form onSubmit={handleSubmit}>
@@ -146,6 +164,10 @@ const AllForm = () => {
                           let error;
                           if (!value) {
                             error = 'Email is required';
+                          }
+                          // IF email does not contain @, error
+                          else if (!value.includes('@')) {
+                            error = 'Invalid email';
                           }
                           return error;
                         }}
@@ -224,11 +246,16 @@ const AllForm = () => {
                             if (!value) {
                               error = 'Email is required';
                             }
+                            // IF email does not contain @, error
+                            else if (!value.includes('@')) {
+                              error = 'Invalid email';
+                            }
                             return error;
                           }}
                         />
                         <FormErrorMessage>{errors.email}</FormErrorMessage>
                       </FormControl>
+                      {/* Password Input */}
                       <FormControl
                         isInvalid={!!errors.password && touched.password}
                       >
@@ -246,10 +273,16 @@ const AllForm = () => {
                               let error;
                               if (!value) {
                                 error = 'Password is required';
-                              } else if (value.length < 8) {
+                              } else if (!/[A-Z]/.test(value)) {
                                 error =
-                                  'Password must be at least 8 characters long';
+                                  'Password must contain at least one uppercase letter';
                               }
+                              // password must contain special characters
+                              else if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                                error =
+                                  'Password must contain at least one special character';
+                              }
+
                               return error;
                             }}
                           />
@@ -260,9 +293,9 @@ const AllForm = () => {
                               onClick={handleTogglePassword}
                             >
                               {show ? (
-                                <AiOutlineEye />
-                              ) : (
                                 <AiOutlineEyeInvisible />
+                              ) : (
+                                <AiOutlineEye />
                               )}
                             </div>
                           </InputRightElement>
