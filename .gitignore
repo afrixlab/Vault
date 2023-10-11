@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 .vercel
+=======
+server/.venv
+server/envs
+>>>>>>> d0d775364d17b54d5f5d06958db9103085bbfa45
