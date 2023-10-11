@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=vaults
+      - POSTGRES_USER=debug@vaults
+      - POSTGRES_PASSWORD=debug@Vaults98
+  redis:
+    image: redis
+  web:
+    build:
+      context: .
+      dockerfile: ./devops/Dockerfile
+    volumes:
+      - .:/vaults
+    ports:
+      - "8000:8000"
+    image: vaults:latest
+    container_name: vaults_backend
+    command: /start.sh
+    env_file:
+      - ./envs/.conf
+    depends_on:
+      - postgres
+      - redis
+
+  celeryworker:
+    build:
+      context: .
+      dockerfile: ./devops/Dockerfile
+    image: vaults:latest
+    container_name: celeryworker
+    depends_on:
+      - redis
+      - postgres
+    command: /start-celeryworker.sh
+    env_file:
+      - ./envs/.conf
+  celerybeat:
+    build:
+      context: .
+      dockerfile: ./devops/Dockerfile
+    image: vaults:latest
+    container_name: celerybeat
+    depends_on:
+      - celeryworker
+    command: /start-celerybeat.sh
+    env_file:
+      - ./envs/.conf
+  nginx:
+    build:
+      context: .
+      dockerfile: ./devops/nginx/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    restart: always
+    volumes:
+      - ./devops/nginx/conf.d:/etc/nginx/conf.d
+      - ./static:/static
+
+volumes:
+  postgres_data:
