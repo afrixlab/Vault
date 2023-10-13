@@ -1,9 +1,14 @@
+import DashboardWalletCard from '@/components/dashboard/Wallet';
 import React from 'react';
 
+export const metadata = {
+  title: 'Wallet Dashboard | Vault',
+  description: 'Start saving and investing with ease',
+};
 const DashboardWallet = () => {
   return (
     <>
-      <h3 className='mb-8 font-[600] lg:text-3xl'>Recent Activities</h3>
+      <DashboardWalletCard />
     </>
   );
 };

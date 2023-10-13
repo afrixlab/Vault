@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Box, Center, Flex } from '@chakra-ui/react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import cn from '@/utils/classmerge';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -20,6 +20,7 @@ const navItems = [
 ];
 
 const DashboardNavbar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -57,6 +58,7 @@ const DashboardNavbar = () => {
           )}
         >
           <Box
+            onClick={() => router.push('/form')}
             className={cn(`flex items-center gap-2 cursor-pointer `, {
               'hidden lg:flex': !isOpen,
             })}

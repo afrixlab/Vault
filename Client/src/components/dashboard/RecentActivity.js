@@ -1,4 +1,6 @@
+'use client'
 import React from 'react';
+import {usePathname} from 'next/navigation'
 
 import { TbStackPush } from 'react-icons/tb';
 
@@ -60,9 +62,12 @@ const activitycards = [
 ];
 
 const RecentActivity = () => {
+  const pathname = usePathname()
   return (
     <>
-      <h3 className='mb-8 font-[600] lg:text-3xl'>Recent Activities</h3>
+{pathname !== '/dashboard/profile' ? (
+  <section className='border p-3 rounded-[1.25rem] h-[35rem] overflow-y-auto'>
+<h3 className='mb-8 font-[600] lg:text-3xl'>Recent Activities</h3>
       <div className='flex flex-col gap-4'>
         {activitycards.map((item, i) => (
           <div
@@ -81,6 +86,8 @@ const RecentActivity = () => {
           </div>
         ))}
       </div>
+</section>
+): null}
     </>
   );
 };

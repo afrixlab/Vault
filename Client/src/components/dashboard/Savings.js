@@ -1,5 +1,8 @@
+'use client';
+import { useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
+import SavingsForm from '../form/SavingsForm';
 
 const savingItems = [
   {
@@ -34,10 +37,15 @@ const savingItems = [
   },
 ];
 const DashboardSavings = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
+      <SavingsForm isOpen={isOpen} onClose={onClose} />
       <section className='flex flex-col gap-8'>
-        <h3 className='font-[600] cursor-pointer lg:text-3xl flex items-center gap-2 self-end'>
+        <h3
+          onClick={onOpen}
+          className='font-[600] cursor-pointer lg:text-3xl flex items-center gap-2 self-end'
+        >
           <IoAddCircleOutline /> New
         </h3>
         <div className='flex flex-col gap-4 overflow-y-auto h-[35rem] pr-2'>
