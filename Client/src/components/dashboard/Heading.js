@@ -27,7 +27,7 @@ const fetchUser = async () => {
 }
 
 const Heading = () => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
