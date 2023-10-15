@@ -44,13 +44,15 @@ const DashboardWalletCard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const userData = await fetchUser();
-            console.log("User", userData);
-            setWallet(userData);
+            if (window.localStorage) {
+                const userData = await fetchUser();
+                console.log("User", userData);
+                setWallet(userData);
+            }
         };
 
         fetchData();
-    }, []);
+    });
 
     return (
         <>
