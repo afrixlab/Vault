@@ -15,7 +15,7 @@ import axios from 'axios';
 
 import { Field, Form, Formik } from 'formik';
 import Button from '../ui/Button';
-export default function({ onClose, isOpen }) {
+export default function WalletForm({ onClose, isOpen }) {
     const toast = useToast();
 
     return (
