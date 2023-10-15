@@ -123,16 +123,16 @@ const AllForm = () => {
 
                                     // push router to /dashboard when user login
                                     if (res.status === 200 && !formState) {
-                                        toast({
+                                        /*toast({
                                             position: 'top',
                                             title: 'Signed in successfully.',
                                             description: 'Welcome back!',
                                             status: res.statusText,
                                             duration: 3000,
                                             isClosable: true,
-                                        });
+                                        });*/
                                         let accessToken = res.data.access
-                                        console.log(accessToken)
+                                        //console.log(accessToken)
                                         localStorage.setItem("token", accessToken);
                                         router.push('/dashboard');
                                     }

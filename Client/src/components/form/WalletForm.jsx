@@ -17,10 +17,6 @@ import { Field, Form, Formik } from 'formik';
 import Button from '../ui/Button';
 export default function SavingsForm({ onClose, isOpen }) {
     const toast = useToast();
-    const token = localStorage.getItem("token");
-    const headers = {
-        Authorization: `Bearer ${token}`
-    };
 
     return (
         <>
@@ -41,6 +37,10 @@ export default function SavingsForm({ onClose, isOpen }) {
                             }}
                             onSubmit={async (values) => {
                                 //console.log(values)
+                                const token = localStorage.getItem("token");
+                                const headers = {
+                                    Authorization: `Bearer ${token}`
+                                };
                                 await axios
                                     .post(
                                         'https://vaults.protechhire.com:8443/api/v1/wallet/new_wallet/',
