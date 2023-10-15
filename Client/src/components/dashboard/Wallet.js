@@ -15,9 +15,10 @@ import axios from 'axios';
 
 
 const DashboardWalletCard = () => {
-    const token = localStorage.getItem("token");
-    const fetchUser = async () => {
 
+    const fetchUser = async () => {
+        const token = window.localStorage.token
+        console.log(token)
         if (token) {
             const headers = {
                 Authorization: `Bearer ${token}`
